@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'asset/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="{% static 'asset/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'asset/js/bootstrap.bundle.min.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="shadow p-2 d-flex justify-content-between rounded-bottom-4" style="background-color: #023e8a;">
+            <ul class="nav col-10">
+              <li><a href="/home"><img src="{% static 'image/jio logo.png' %}" class="w-25" alt=""></a></li>  
+              <li><a href="/prepaid" class="nav-link pr-2 link-light fw-bold">Prepaid</a></li>
+              <li><a href="/postpaid" class="nav-link pr-2 link-light fw-bold">Postpaid</a></li>
+              <li><a href="/true5g" class="nav-link pr-2 link-light fw-bold">True 5G</a></li>
+              <li><a href="/locate" class="nav-link pr-2 link-light fw-bold">Locate Us</a></li>
+              <li><a href="/contact" class="nav-link pr-2 link-light fw-bold">Contact</a></li>
+              <li><a href="/about" class="nav-link pr-2 link-light fw-bold">About Us</a></li>
+            </ul>
+            <div class="col-2">
+              {% if user.is_authenticated %}
+              <div class="text-end"><a href="/logout"><button type="button" class="btn btn-primary border-light fw-bold mx-2">Logout</button></a>              </div>
+              {% else %}
+              <a href="/login"><button type="button" class="btn btn-primary border-light fw-bold mx-2">Login</button></a>
+              <a href="/register"><button type="button" class="btn btn-primary border-light fw-bold">Sign-up</button></a>
+              {% endif %}
+           </div>
+          </header>   

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block 'main' %}
+<main class="form-signup shadow border rounded-5">
+    <form action="" method="post">
+      {% csrf_token %}
+      <h1 class="h3 mb-3 fw-normal text-center">Sign up</h1>
+      <div class="form-floating">
+        <input type="email" name="uemail" class="form-control" id="floatingInput" placeholder="">
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="tel" name="umob" class="form-control" id="floatingInput" placeholder="">
+        <label for="floatingInput">Mobile Number</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" name="upass" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" name="ucpass" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Confirm Password</label>
+      </div>
+      <a href="/register"><button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Register</button><br><br></a>
+      <p class="text-center">Already Register - <a href="/login" class="nav-link d-inline">Sign in</a></p>
+      {% if errmsg %}
+      <div class="alert alert-danger">{{errmsg}}</div>
+      {% endif %}
+      {% if success %}
+      <div class="alert alert-success">{{success}}</div>
+      {% endif %}
+
+    </form>
+  </main>
+{% endblock %}

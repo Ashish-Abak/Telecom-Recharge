@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block 'main' %}
+<div class="container">
+    <div class="row">
+        <!-- filter column -->
+        <div class="col-md-3 my-4">
+            <div class="p-3 text-dark rounded-top-4" style="background-color: #e9ecef;">
+                <span class="fs-4 text-dark nav-link">Plan by category</span> <hr>
+                <ul class="nav flex-column">
+                <li class="border rounded bdf"><a href="/home" class="nav-link text-dark">All</a></li>
+                <li class="border rounded bdf"><a href="/planfilter/1GB/Day" class="nav-link text-dark">1 GB/Day Plans</a></li>
+                <li class="border rounded bdf"><a href="/planfilter/1.5GB/Day" class="nav-link text-dark">1.5 GB/Day Plans</a></li>
+                <li class="border rounded bdf"><a href="/planfilter/2GB/Day" class="nav-link text-dark">2 GB/Day Plans</a></li>
+                <li class="border rounded bdf"><a href="/planfilter/2.5GB/Day" class="nav-link text-dark">2.5 GB/Day Plans</a></li>
+                <li class="border rounded bdf"><a href="/planfilter/3GB/Day" class="nav-link text-dark">3 GB/Day Plans</a></li>
+                </ul>
+            </div>
+            <div class="p-3 text-dark rounded-bottom-4" style="background-color: #e9ecef;">
+                <span class="fs-4 text-dark nav-link">Plan by Price</span><hr>
+                <ul class="nav flex-column">
+                <li class="border rounded bdf"><a href="/sort/0" class="nav-link text-dark">Low to High</a></li>
+                <li class="border rounded bdf"><a href="/sort/1" class="nav-link text-dark">High to Low</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Main card -->
+        <div class="col-md-9 my-4">
+            <div class="row">
+                {% for x in plans %}
+                <div class="col-md-4 mb-4">
+                    <div class="card p-4 shadow border rounded-5" style="background-color: #ced4da;">
+                        <p class="fw-bold fs-3"><i class="bi bi-currency-rupee"></i>{{x.price}}</p>
+                        <a href="/pdetails/{{x.id}}" class="nav-link text-primary">View details</a><hr>
+                        <div class="d-flex justify-content-evenly">
+                            <p>VALIDITY <br> <b>{{x.validity}}</b></p>
+                            <p>DATA <br> <b>{{x.data}}/Day</b></p>
+                        </div>
+                        <h6 class="text-danger fw-normal">Unlimited True 5G data</h6><br>
+                        <div class="text-center"><button type="button" data-bs-toggle="modal" data-bs-target="#inputfield" class="btn btn-primary btn-sm fw-bold fs-6 rounded-5 w-75">Recharge</button></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+<div class="modal fade" id="inputfield" tabindex="-1" aria-labelledby="rechargefield" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5"  id="rechargefield">Recharge</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="mobileinput" name="rmob" class="col-form-label">Enter Mobile Number</label>
+            <input type="tel" class="form-control" maxlength="10" id="mobileinput">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        {% for x in plans %}
+        {% if forloop.counter == 1 %}
+        <a href="/payment/{{x.id}}"><button type="button" class="btn btn-primary">Continue</button></a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
