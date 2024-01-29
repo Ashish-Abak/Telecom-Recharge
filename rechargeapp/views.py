@@ -6,6 +6,8 @@ from django.db.models import Q
 import random
 import razorpay
 from django.core.mail import send_mail
+from datetime import datetime,time
+from django.views import View
 
 
 # Create your views here.
@@ -98,17 +100,26 @@ def payment(request,pid):
         client = razorpay.Client(auth=("rzp_test_oTkfAYQEfktFwW", "6Skss2O3zauBrlz0MxZKGlyX"))
         data = { "amount": amt*100, "currency": "INR", "receipt": str(oid) }
         payment = client.order.create(data=data)
-        context={'data':payment}
+        context={'data':payment,'pid':pid}
         return render(request,'payment.html',context)
     
-def sendmail(request):
+def sendmail(request,Id):
     uemail=request.user.email
+    date=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    p=plan.objects.filter(id=Id)
+    r=recharge_no.objects.all()
+    for x in p:
+        pr=x.price
+        vd=x.validity
+    for y in r:
+        mob=y.rmobile
     send_mail(
         "Recharge succesfull",
-        "Recharge for has done succesfully",
+        f"{date} \nRs.{pr} Recharge for {mob} through Razorpay has done successfully for {vd}",
         "ashishabak4@gmail.com",
         [uemail],
         fail_silently=False,)
+    r.delete()
     return redirect('/home')
     
 def prepaid(request):
@@ -132,3 +143,14 @@ def contact(request):
 
 def about(request):
     return render(request,'about.html')
+
+def mobile(request, pid):
+    if request.method=='POST':
+        rmob=request.POST['rmob']
+        r=recharge_no.objects.create(rmobile=rmob)
+        r.save()
+        return redirect('/payment/{}'.format(pid))
+    else:
+        return render(request,'plan_details.html')
+
+    

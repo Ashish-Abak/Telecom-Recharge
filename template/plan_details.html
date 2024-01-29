@@ -64,21 +64,22 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form method="post">
+          {% for x in plans %}
+          <form method="post" action="/mobile/{{x.id}}">
+            {% csrf_token %}
             <div class="mb-3">
-              <label for="mobileinput" name="rmob" class="col-form-label">Enter Mobile Number</label>
-              <input type="tel" class="form-control" maxlength="10" id="mobileinput">
+              <label for="mobileinput" class="col-form-label">Enter Mobile Number</label>
+              <input type="tel" name="rmob" class="form-control" maxlength="10" id="mobileinput">
             </div>
-          </form>
-        </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          {% for x in plans %}
+          
           {% if forloop.counter == 1 %}
-          <a href="/payment/{{x.id}}"><button type="button" class="btn btn-primary">Continue</button></a>
+          <button class="btn btn-primary" type="submit">Continue</button>
+          <!-- <a href="/mobile/{{x.id}}"><button type="button" class="btn btn-primary">Continue</button></a> -->
           {% endif %}
           {% endfor %}
-      </div>
+      </div></form></div>
       </div>
     </div>
   </div>
